@@ -2,16 +2,19 @@
 
 ## Purpose
 
-Zion Pages is a blog of essays on AI, neuroscience, philosophy, and brain
-anatomy.
+Zion Pages is a publication by Gautam Devaraju on AI, neuroscience, philosophy,
+and brain anatomy. It carries several forms of writing, each with its own
+shape: papers, essays, thoughts, and experiments.
 
-The articles follow evidence, state uncertainty, and revise the view when facts
-demand it.
+The writing follows evidence, states uncertainty, and revises the view when
+facts demand it.
 
 ## Readers
 
 Curious people who want to understand AI, neuroscience, philosophy, and brain
-anatomy without being buried in jargon. Prior expertise is not required.
+anatomy without being buried in jargon, including both interested newcomers
+and established researchers or practitioners. Prior expertise is never assumed;
+precision is never traded away.
 
 ## Editorial Standard
 
@@ -32,8 +35,10 @@ question an assumption without making them work to understand the page.
 - One clear idea leads each page.
 - Typography and space create hierarchy; decoration does not.
 - Light and dark themes are equally complete and comfortable.
-- Matrix references stay small and functional: theme names, the mark, and hidden
-  discoveries. Never visible roleplay.
+- The Matrix layer is quietly ambient: a first visit carries one or two
+  subliminal details (a timestamp that settles, a phrase that decodes), and
+  deeper discoveries stay hidden. It never blocks, scores, instructs, or
+  becomes visible roleplay, and it is never louder than the reading.
 - No feeds, engagement tricks, dense dashboards, or generic hacker imagery.
 
 ## Accessibility

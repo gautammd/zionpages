@@ -1,82 +1,100 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkFlexibleMarkers from "remark-flexible-markers";
+import remarkGfm from "remark-gfm";
 
-import { FirstVisitIntro } from "@/components/first-visit-intro";
-import { ChoicePill } from "@/components/theme";
-import { essays, formatEssayDate } from "@/lib/essays";
+import { PieceList } from "@/components/piece-list";
+import { TraceDate } from "@/components/trace-date";
+import { TraceLine } from "@/components/trace-line";
+import { formatPieceDate, pieces } from "@/lib/writing";
+
+function leadParagraphs(body: string, count: number) {
+  return body
+    .split("\n\n")
+    .filter((block) => !block.startsWith("#") && !block.startsWith("{{"))
+    .slice(0, count);
+}
 
 export default function Home() {
+  const [lead, ...rest] = pieces;
+  const opening = leadParagraphs(lead.body, 4).join("\n\n");
+
   return (
-    <div className="mx-auto w-full max-w-5xl">
-      <FirstVisitIntro />
-
-      <section className="flex min-h-[calc(70svh-4rem)] items-center px-6 py-20 sm:px-10 sm:py-28">
-        <div className="w-full max-w-4xl">
-          <h1 className="max-w-[12ch] text-[clamp(3rem,7vw,5.5rem)] leading-[0.98] font-semibold tracking-[-0.04em] text-balance">
-            What makes a mind?
-            <ChoicePill />
-          </h1>
-          <p className="mt-10 max-w-[42rem] text-lg leading-8 text-pretty text-muted-foreground sm:text-xl sm:leading-9">
-            Bodies shape perception. Memory links one moment to the next. Our
-            choices make us ask how free we are. AI makes us ask which parts of
-            intelligence require a body—or a self.
-          </p>
-        </div>
-      </section>
-
-      <section id="essays" className="border-t border-border/70 px-6 py-20 sm:px-10 sm:py-28">
-        <div className="mb-12 flex items-end justify-between gap-6">
-          <div>
-            <p className="t-label mb-3">New writing</p>
-            <h2 className="text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">
-              Recent essays
-            </h2>
+    <div className="mx-auto w-full max-w-6xl">
+      <article className="px-6 pt-14 pb-16 sm:px-10 sm:pt-20 sm:pb-24">
+        <div className="grid gap-8 lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-16">
+          <div className="settle-late flex flex-wrap content-start items-center gap-x-3 gap-y-2 lg:block lg:space-y-2">
+            <p className="t-label text-signal">
+              {lead.form} · {lead.field}
+            </p>
+            <TraceDate
+              date={lead.date}
+              formatted={formatPieceDate(lead.date)}
+              className="t-label"
+            />
+            <p className="t-label">{lead.author}</p>
+            {lead.credential && (
+              <p className="t-label text-muted-foreground/80">
+                {lead.credential}
+              </p>
+            )}
+            <p className="t-label">{lead.readingMinutes} min read</p>
+            <TraceLine className="t-label hidden text-muted-foreground/60 lg:block lg:pt-4" />
           </div>
-          <Link
-            href="/essays"
-            className="group hidden items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground sm:flex"
-          >
-            All essays
-            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-        </div>
 
-        <ol className="border-t border-border/70">
-          {essays.map((essay) => (
-            <li key={essay.slug} className="border-b border-border/70">
+          <div className="settle">
+            <h1 className="max-w-[16ch] text-[clamp(2.5rem,6vw,3.75rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-balance">
               <Link
-                href={`/essays/${essay.slug}`}
-                className="group grid gap-5 py-9 sm:grid-cols-[9rem_1fr_auto] sm:items-start sm:gap-8 sm:py-11"
+                href={`/writing/${lead.slug}`}
+                className="transition-colors hover:text-signal focus-visible:text-signal"
               >
-                <div className="space-y-2">
-                  <p className="t-label text-signal">{essay.field}</p>
-                  <time dateTime={essay.date} className="t-label block">
-                    {formatEssayDate(essay.date)}
-                  </time>
-                </div>
-                <div className="max-w-2xl">
-                  <h3 className="text-3xl font-semibold tracking-[-0.03em] transition-colors group-hover:text-signal group-focus-visible:text-signal sm:text-4xl">
-                    {essay.title}
-                  </h3>
-                  <p className="mt-3 max-w-xl leading-7 text-muted-foreground text-pretty">
-                    {essay.deck}
-                  </p>
-                </div>
-                <span className="t-label whitespace-nowrap sm:pt-2">
-                  {essay.readingMinutes} min read
-                </span>
+                {lead.title}
               </Link>
-            </li>
-          ))}
-        </ol>
+            </h1>
 
-        <Link
-          href="/essays"
-          className="mt-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground sm:hidden"
+            {lead.subtitle && (
+              <p className="mt-4 max-w-2xl font-serif text-lg leading-7 text-foreground/75 text-balance italic sm:text-xl sm:leading-8">
+                {lead.subtitle}
+              </p>
+            )}
+
+            <div className="prose mt-9">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm, remarkFlexibleMarkers]}
+              >
+                {opening}
+              </ReactMarkdown>
+            </div>
+
+            <p className="mt-9">
+              <Link
+                href={`/writing/${lead.slug}`}
+                className="inline-flex min-h-11 items-center font-serif text-lg text-foreground underline decoration-signal-muted underline-offset-4 transition-colors hover:decoration-signal focus-visible:decoration-signal"
+              >
+                Continue reading
+              </Link>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      {rest.length > 0 && (
+        <section
+          aria-label="More writing"
+          className="border-t border-border/70 px-6 py-16 sm:px-10 sm:py-20"
         >
-          All essays <ArrowUpRight className="size-4" />
-        </Link>
-      </section>
+          <div className="mb-9 flex items-baseline justify-between gap-6">
+            <h2 className="text-sm font-semibold">Also in the pages</h2>
+            <Link
+              href="/writing"
+              className="inline-flex min-h-11 items-center text-sm text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-signal focus-visible:text-foreground"
+            >
+              All writing
+            </Link>
+          </div>
+          <PieceList pieces={rest} />
+        </section>
+      )}
     </div>
   );
 }

@@ -26,23 +26,6 @@ export function Operator() {
   }, []);
 
   useEffect(() => {
-    const onRedPill = () => {
-      setTyped("");
-      setLine(LINES[0]);
-    };
-    const onBluePill = () => {
-      setTyped("");
-      setLine("The story ends.");
-    };
-    window.addEventListener("zion:red-pill", onRedPill);
-    window.addEventListener("zion:blue-pill", onBluePill);
-    return () => {
-      window.removeEventListener("zion:red-pill", onRedPill);
-      window.removeEventListener("zion:blue-pill", onBluePill);
-    };
-  }, []);
-
-  useEffect(() => {
     let buffer = "";
     let lineIndex = 0;
     const onKey = (e: KeyboardEvent) => {
@@ -68,6 +51,19 @@ export function Operator() {
 
   useEffect(() => {
     if (line === null) return;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reduceMotion) {
+      const reveal = setTimeout(() => setTyped(line), 0);
+      const dismiss = setTimeout(() => setLine(null), 3200);
+      return () => {
+        clearTimeout(reveal);
+        clearTimeout(dismiss);
+      };
+    }
+
     let i = 0;
     const type = setInterval(() => {
       i += 1;
@@ -89,7 +85,8 @@ export function Operator() {
       className="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2"
     >
       <p className="cursor-block border border-signal-muted/40 bg-background/95 px-4 py-2.5 font-mono text-[0.8125rem] tracking-wide text-signal">
-        {typed}
+        <span aria-hidden="true">{typed}</span>
+        <span className="sr-only">{line}</span>
       </p>
     </div>
   );

@@ -1,7 +1,9 @@
+import { DecodeText } from "@/components/decode-text";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/70">
-      <div className="mx-auto flex min-h-16 w-full max-w-5xl flex-col justify-center gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+      <div className="mx-auto flex min-h-16 w-full max-w-6xl flex-col justify-center gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <p
           className="font-mono text-xs text-muted-foreground"
           title="Still warm."
@@ -16,7 +18,9 @@ export function SiteFooter() {
             <span aria-hidden>·</span>
             <span lang="sa-Latn">asato mā sad gamaya</span>
           </p>
-          <p className="mt-1">Lead me from the unreal to the real.</p>
+          <p className="mt-1">
+            <DecodeText text="Lead me from the unreal to the real." />
+          </p>
         </div>
       </div>
     </footer>

@@ -22,40 +22,15 @@ export function ThemeSwitch() {
       size="sm"
       className="h-11 gap-2 px-2 font-mono text-[0.6875rem] tracking-[0.04em] text-muted-foreground hover:text-foreground"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      aria-label="Switch between Construct and Matrix themes"
-      title="Switch reality"
+      aria-label={
+        resolvedTheme === "dark"
+          ? "Matrix theme active. Switch to Construct (light) theme"
+          : "Construct theme active. Switch to Matrix (dark) theme"
+      }
     >
       <span aria-hidden className="mode-glyph" />
       <span className="dark:hidden">Construct</span>
       <span className="hidden dark:inline">Matrix</span>
     </Button>
-  );
-}
-
-export function ChoicePill() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const isMatrix = resolvedTheme === "dark";
-
-  const choose = () => {
-    setTheme(isMatrix ? "light" : "dark");
-    window.dispatchEvent(
-      new Event(isMatrix ? "zion:blue-pill" : "zion:red-pill"),
-    );
-  };
-
-  return (
-    <button
-      type="button"
-      className="choice-pill"
-      onClick={choose}
-      aria-label="Switch between Construct and Matrix themes"
-      title="Take the pill"
-    >
-      <span aria-hidden className="choice-pill-shape" />
-      <span aria-hidden className="choice-pill-hint">
-        <span className="dark:hidden">look closer</span>
-        <span className="hidden dark:inline">return</span>
-      </span>
-    </button>
   );
 }

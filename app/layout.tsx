@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s — Zion Pages",
   },
   description:
-    "Plain-language essays on AI, neuroscience, philosophy, anatomy, and perspective.",
+    "Papers, essays, thoughts, and experiments on AI, neuroscience, philosophy, and anatomy. Written by Gautam Devaraju.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -43,8 +43,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
           <SiteFooter />
           <Operator />
         </ThemeProvider>
