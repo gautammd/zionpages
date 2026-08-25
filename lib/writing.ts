@@ -192,7 +192,9 @@ And you? You aren't a solid object standing outside the universe, observing it. 
 
 ---
 
-Does seeing the world as a living web of relations — rather than a pile of solid building blocks — change how you think about your own existence? Sit with the question. It's the whole paper, in one sentence.`,
+So here's the question to sleep on tonight:
+
+If nothing is solid — not the table, not the atom, not even you — what, exactly, is doing all the existing?`,
   },
 ];
 
