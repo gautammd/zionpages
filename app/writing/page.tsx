@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PieceList } from "@/components/piece-list";
-import { forms, getPiecesByForm, pieces } from "@/lib/writing";
+import { forms, getPieces, getPiecesByForm } from "@/lib/writing";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function WritingPage() {
+  const pieces = getPieces();
   const sections = forms.map((form) => ({
     form,
     pieces: getPiecesByForm(form.form),

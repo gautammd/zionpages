@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 import { PieceList } from "@/components/piece-list";
 import { TraceDate } from "@/components/trace-date";
 import { TraceLine } from "@/components/trace-line";
-import { formatPieceDate, pieces } from "@/lib/writing";
+import { formatPieceDate, getPieces } from "@/lib/writing";
 
 function leadParagraphs(body: string, count: number) {
   return body
@@ -16,7 +16,7 @@ function leadParagraphs(body: string, count: number) {
 }
 
 export default function Home() {
-  const [lead, ...rest] = pieces;
+  const [lead, ...rest] = getPieces();
   const opening = leadParagraphs(lead.body, 4).join("\n\n");
 
   return (

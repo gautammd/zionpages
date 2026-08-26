@@ -8,10 +8,10 @@ import remarkGfm from "remark-gfm";
 
 import { figures } from "@/components/figures";
 import { Reveal } from "@/components/reveal";
-import { formatPieceDate, getPiece, pieces } from "@/lib/writing";
+import { formatPieceDate, getPiece, getPieces } from "@/lib/writing";
 
 export function generateStaticParams() {
-  return pieces.map(({ slug }) => ({ slug }));
+  return getPieces().map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -57,7 +57,8 @@ export default async function PiecePage({
 
   if (!piece) notFound();
 
-  const next = pieces[pieces.indexOf(piece) + 1];
+  const pieces = getPieces();
+  const next = pieces[pieces.findIndex((p) => p.slug === piece.slug) + 1];
 
   return (
     <div className="mx-auto w-full max-w-6xl">
