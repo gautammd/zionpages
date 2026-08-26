@@ -25,8 +25,12 @@ function writePieces(pieces: Piece[]) {
   fs.writeFileSync(piecesFile, `${JSON.stringify(pieces, null, 2)}\n`);
 }
 
+// Browsers submit textarea values with CRLF line endings; normalize so
+// paragraph splitting on "\n\n" keeps working.
 function field(formData: FormData, name: string) {
-  return String(formData.get(name) ?? "").trim();
+  return String(formData.get(name) ?? "")
+    .replace(/\r\n/g, "\n")
+    .trim();
 }
 
 function slugify(text: string) {
